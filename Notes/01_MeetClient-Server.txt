@@ -1,0 +1,44 @@
+PUZZLE PLATFORM
+
+-------------------------------------------------------------------------------------
+                         Meet-The Client Server Model
+-------------------------------------------------------------------------------------
+
+* You can create an instance of the game, using the Windows CMD.
+* When te CMD is open, put the Path where the UE4 Engine is, then Space, then put the
+pathe where the .uproject is, and finally, put "-game".
+
+"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+-game
+
+* If you want to execute it with more info, you can add "-log"
+
+"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+-game -log
+
+* Now, if you want to open a specific Map, you can add the Map path before use -game
+
+C:\Users\USER>"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap 
+-game -log
+
+/////////////////// EXERCISE /////////////////
+
+* To create a Server, you change -game for -server.
+
+C:\Users\USER>"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap 
+-server -log
+
+* To link a Client, you have to put, after the paths (avoiding the game map), the local IP 
+and using "-game" again.
+
+C:\Users\USER>"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+192.168.1.103 -game -log
+
+* You can add multiple clients, repeating the same command above ! 
