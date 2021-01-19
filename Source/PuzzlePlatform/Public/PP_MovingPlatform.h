@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	float Speed;
 
+	UPROPERTY(EditAnywhere, meta = (MakeEditWidget = true))
+	FVector TargetLocation;
+
 protected:
 
 	virtual void Tick(float DeltaTime) override;
