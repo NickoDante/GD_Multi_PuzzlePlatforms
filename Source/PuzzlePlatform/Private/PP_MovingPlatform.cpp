@@ -10,6 +10,10 @@ APP_MovingPlatform::APP_MovingPlatform()
 	SetMobility(EComponentMobility::Movable);
 
 	Speed = 10.0f;
+
+	// The new way
+	bReplicates = true;
+	SetReplicatingMovement(true);
 }
 
 void APP_MovingPlatform::Tick(float DeltaTime)
@@ -22,4 +26,8 @@ void APP_MovingPlatform::Tick(float DeltaTime)
 		Location += FVector(1, 0, 0) * (Speed * DeltaTime);
 		SetActorLocation(Location);
 	}
+
+// 	if (!HasAuthority()) // Not on server = client.
+// 	{
+// 	}
 }
