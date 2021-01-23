@@ -1,0 +1,27 @@
+PUZZLE PLATFORM
+
+-------------------------------------------------------------------------------------
+                         Hosting Servers with server travels
+-------------------------------------------------------------------------------------
+
+* We create a new map called Lobby
+* We use ServerTravel to go to another map (From Lobby to our level map)
+* now, for testing, we are going to test it with two standalone games using Windows PowerShell (it's like CMD command)
+* We put : 
+
+& "D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+/Game/Maps/Lobby -game -log
+
+IMPORTANT! In PowerShell, this type of commands ALWAYS starts with "&" symbol.
+
+* On this first standalone game, we use the Host cheatcode/exec function to go to our level.
+* We go to PowerShell again and type: 
+
+& "D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+192.168.1.103 -game -log
+
+IMPORTANT! We get the IP adress from the Ethernet Properties (IPv4)
+
+*The second standalone will be automatically on the same level that the first player !

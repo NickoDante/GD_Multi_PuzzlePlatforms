@@ -23,6 +23,15 @@ void UPP_GameInstance::PP_Host()
 	}
 
 	Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, TEXT("Hosting"));
+
+	UWorld* World = GetWorld();
+	if (!IsValid(World))
+	{
+		return;
+	}
+
+	// We put listen to this line, because we need to host a server listen other clients
+	World->ServerTravel("/Game/Maps/PuzzlePlatformMap?listen");
 }
 
 void UPP_GameInstance::PP_Join(const FString& Address)
