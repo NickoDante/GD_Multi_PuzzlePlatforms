@@ -19,4 +19,10 @@ public:
 	UPP_GameInstance(const FObjectInitializer & ObjectInitializer);
 
 	virtual void Init() override;
+
+	UFUNCTION(exec)
+	void PP_Host();
+
+	UFUNCTION(exec)
+	void PP_Join(const FString& Address);
 };
