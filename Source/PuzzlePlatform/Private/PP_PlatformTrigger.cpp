@@ -3,6 +3,7 @@
 
 #include "PP_PlatformTrigger.h"
 #include "Components/BoxComponent.h"
+#include "PP_MovingPlatform.h"
 
 // Sets default values
 APP_PlatformTrigger::APP_PlatformTrigger()
@@ -28,12 +29,24 @@ void APP_PlatformTrigger::BeginPlay()
 
 void APP_PlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Activated"));
+	for (APP_MovingPlatform* MovingPlatform : PlatformsToTrigger)
+	{
+		if (IsValid(MovingPlatform))
+		{
+			MovingPlatform->AddActiveTrigger();
+		}
+	}
 }
 
 void APP_PlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Deactivated"));
+	for (APP_MovingPlatform* MovingPlatform : PlatformsToTrigger)
+	{
+		if (IsValid(MovingPlatform))
+		{
+			MovingPlatform->RemoveActiveTrigger();
+		}
+	}
 }
 
 // Called every frame

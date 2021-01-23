@@ -29,26 +29,42 @@ void APP_MovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (HasAuthority())
+	if (ActiveTriggers > 0)
 	{
-		FVector Location = GetActorLocation();
-		float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
-		float JourneyTravelled = (Location - GlobalStartLocation).Size();
-		bool bIsTravelCompleted = JourneyTravelled >= JourneyLength;
-
-		if (bIsTravelCompleted)
+		if (HasAuthority())
 		{
-			FVector Swap = GlobalStartLocation;
-			GlobalStartLocation = GlobalTargetLocation;
-			GlobalTargetLocation = Swap;
-		}
+			FVector Location = GetActorLocation();
+			float JourneyLength = (GlobalTargetLocation - GlobalStartLocation).Size();
+			float JourneyTravelled = (Location - GlobalStartLocation).Size();
+			bool bIsTravelCompleted = JourneyTravelled >= JourneyLength;
 
-		FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
-		Location += Direction * (Speed * DeltaTime);
-		SetActorLocation(Location);
+			if (bIsTravelCompleted)
+			{
+				FVector Swap = GlobalStartLocation;
+				GlobalStartLocation = GlobalTargetLocation;
+				GlobalTargetLocation = Swap;
+			}
+
+			FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
+			Location += Direction * (Speed * DeltaTime);
+			SetActorLocation(Location);
+		}
 	}
 
 // 	if (!HasAuthority()) // Not on server = client.
 // 	{
 // 	}
+}
+
+void APP_MovingPlatform::AddActiveTrigger()
+{
+	ActiveTriggers++;
+}
+
+void APP_MovingPlatform::RemoveActiveTrigger()
+{
+	if (ActiveTriggers > 0)
+	{
+		ActiveTriggers--;
+	}
 }

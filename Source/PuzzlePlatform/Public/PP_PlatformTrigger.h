@@ -7,6 +7,7 @@
 #include "PP_PlatformTrigger.generated.h"
 
 class UBoxComponent;
+class APP_MovingPlatform;
 
 UCLASS()
 class PUZZLEPLATFORM_API APP_PlatformTrigger : public AActor
@@ -22,6 +23,11 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* TriggerVolume;
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	TArray<APP_MovingPlatform*> PlatformsToTrigger;
 
 protected:
 
