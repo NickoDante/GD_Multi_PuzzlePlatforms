@@ -43,4 +43,12 @@ void UPP_GameInstance::PP_Join(const FString& Address)
 	}
 
 	Engine->AddOnScreenDebugMessage(0, 2, FColor::Cyan, FString::Printf(TEXT("Joining %s"), *Address));
+
+	APlayerController* PC = GetFirstLocalPlayerController();
+	if (!IsValid(PC))
+	{
+		return;
+	}
+
+	PC->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }

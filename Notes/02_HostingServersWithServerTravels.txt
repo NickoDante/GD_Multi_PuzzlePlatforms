@@ -5,7 +5,8 @@ PUZZLE PLATFORM
 -------------------------------------------------------------------------------------
 
 * We create a new map called Lobby
-* We use ServerTravel to go to another map (From Lobby to our level map)
+* On Game instance, Host function, we use ServerTravel to go to another map (From Lobby to our level map)
+* Server Travel is an Engine function to send all the player controllers to another place !
 * now, for testing, we are going to test it with two standalone games using Windows PowerShell (it's like CMD command)
 * We put : 
 

@@ -1,0 +1,30 @@
+PUZZLE PLATFORM
+
+-------------------------------------------------------------------------------------
+                         Hosting Servers with server travels
+-------------------------------------------------------------------------------------
+
+* We set the Lobby as the Game Map by default when Build (In Project Settings/Maps & Modes)
+* On GameInstance class, Join function, we use ClientTravel to sen the Player Controller to a server ! 
+* Client Travel is a Player Controller function ! 
+* That clientTravel use a TravelType... We put the absolute.
+* now, for testing, we are going to test it with two standalone games using Windows PowerShell (it's like CMD command)
+* We put : 
+
+& "D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+-game -log
+
+IMPORTANT! We dont put the map, because we set Lobby as the default map to start.
+
+* On this first game, we use the Host console command to host a server.
+* On Powershell again, we use the same line code to start another standalone game: 
+
+& "D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" 
+"D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" 
+-game -log
+
+IMPORTANT! It's exactly the same as the above.
+
+* On this second game, we use the Join console command putting the IP Address (192.168.1.103 in this case)
+* It works !!!!!
