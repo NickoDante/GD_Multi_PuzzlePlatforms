@@ -19,6 +19,21 @@ void APP_PlatformTrigger::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (IsValid(TriggerVolume))
+	{
+		TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &APP_PlatformTrigger::OnOverlapBegin);
+		TriggerVolume->OnComponentEndOverlap.AddDynamic(this, &APP_PlatformTrigger::OnOverlapEnd);
+	}
+}
+
+void APP_PlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Activated"));
+}
+
+void APP_PlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Deactivated"));
 }
 
 // Called every frame
