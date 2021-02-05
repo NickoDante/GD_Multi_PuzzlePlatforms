@@ -5,6 +5,7 @@
 #include "Engine/Engine.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
+#include "MenuSystem/PP_MainMenu.h"
 
 UPP_GameInstance::UPP_GameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -30,42 +31,7 @@ void UPP_GameInstance::Init()
 	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
 }
 
-void UPP_GameInstance::LoadMenu()
-{
-	if (!IsValid(MenuClass))
-	{
-		return;
-	}
-
-	// Create the widget
-	UUserWidget* MenuWidget = CreateWidget<UUserWidget>(this, MenuClass);
-
-	if (!IsValid(MenuWidget))
-	{
-		return;
-	}
-
-	// Add widget to screen.
-	MenuWidget->AddToViewport();
-
-	// We need the Player Controller to set the input mode for this menu
-	APlayerController* PC = GetFirstLocalPlayerController();
-	if (!IsValid(PC))
-	{
-		return;
-	}
-
-	// Setup the input data to interact with the menu
-	FInputModeUIOnly InputModeData;
-	InputModeData.SetWidgetToFocus(MenuWidget->TakeWidget()); // The first widget to focus at start
-	InputModeData.SetLockMouseToViewportBehavior(MouseLockMode); // The lock mouse behaviour
-	PC->SetInputMode(InputModeData); // Finally set it.
-
-	// Show the cursor or not.
-	PC->bShowMouseCursor = bShowMainMenuCursor;
-}
-
-void UPP_GameInstance::PP_Host()
+void UPP_GameInstance::Host()
 {
 	UEngine* Engine = GetEngine();
 	if (!IsValid(Engine))
@@ -85,7 +51,7 @@ void UPP_GameInstance::PP_Host()
 	World->ServerTravel("/Game/Maps/PuzzlePlatformMap?listen");
 }
 
-void UPP_GameInstance::PP_Join(const FString& Address)
+void UPP_GameInstance::Join(const FString& Address)
 {
 	UEngine* Engine = GetEngine();
 	if (!IsValid(Engine))
@@ -102,6 +68,54 @@ void UPP_GameInstance::PP_Join(const FString& Address)
 	}
 
 	PC->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+}
+
+void UPP_GameInstance::LoadMenu()
+{
+	if (!IsValid(MenuClass))
+	{
+		return;
+	}
+
+	// Create the widget
+	UPP_MainMenu* MenuWidget = CreateWidget<UPP_MainMenu>(this, MenuClass);
+
+	if (!IsValid(MenuWidget))
+	{
+		return;
+	}
+
+	// Add widget to screen.
+	MenuWidget->AddToViewport();
+
+	// We need the Player Controller to set the input mode for this menu
+	APlayerController* PC = GetFirstLocalPlayerController();
+	if (!IsValid(PC))
+	{
+		return;
+	}
+
+	// Setup the input data to interact with the menu
+	FInputModeUIOnly InputModeData;
+	InputModeData.SetWidgetToFocus(MenuWidget->TakeWidget()); // The first widget to focus at start
+	InputModeData.SetLockMouseToViewportBehavior(MouseLockMode); // The lock mouse behavior
+	PC->SetInputMode(InputModeData); // Finally set it.
+
+	// Show the cursor or not.
+	PC->bShowMouseCursor = bShowMainMenuCursor;
+
+	// Set the interface of the game instance to the main menu
+	MenuWidget->SetMenuInterface(this);
+}
+
+void UPP_GameInstance::PP_Host()
+{
+	Host();
+}
+
+void UPP_GameInstance::PP_Join(const FString& Address)
+{
+	Join(Address);
 }
 
 void UPP_GameInstance::PP_LoadMenu()

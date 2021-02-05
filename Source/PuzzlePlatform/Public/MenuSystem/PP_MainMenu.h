@@ -7,6 +7,7 @@
 #include "PP_MainMenu.generated.h"
 
 class UButton;
+class IPP_MenuInterface;
 
 /**
  * 
@@ -25,6 +26,12 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	UButton* JoinButton;
 
+	IPP_MenuInterface* MenuInterface;
+
+public:
+
+	void SetMenuInterface(IPP_MenuInterface* Interface);
+
 protected:
 
 	virtual bool Initialize() override;
@@ -33,5 +40,5 @@ protected:
 	void HostServer();
 
 	UFUNCTION()
-	void JoinServer();
+	void JoinServer(const FString& Address);
 };

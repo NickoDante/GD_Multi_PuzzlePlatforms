@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "MenuSystem/PP_MenuInterface.h"
 #include "PP_GameInstance.generated.h"
 
 class UUserWidget;
@@ -12,7 +13,7 @@ class UUserWidget;
  * Its alive always in the game. It works to join a server or not. It can be tested through console commands
  */
 UCLASS()
-class PUZZLEPLATFORM_API UPP_GameInstance : public UGameInstance
+class PUZZLEPLATFORM_API UPP_GameInstance : public UGameInstance, public IPP_MenuInterface
 {
 	GENERATED_BODY()
 
@@ -34,6 +35,10 @@ public:
 public:
 
 	virtual void Init() override;
+
+	virtual void Host() override;
+
+	virtual void Join(const FString& Address) override;
 
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();
