@@ -20,6 +20,9 @@ UPP_GameInstance::UPP_GameInstance(const FObjectInitializer & ObjectInitializer)
 // 
 // 	MenuClass = MenuBPClass.Class;
 	///---------
+
+	MouseLockMode = EMouseLockMode::DoNotLock;
+	bShowMainMenuCursor = true;
 }
 
 void UPP_GameInstance::Init()
@@ -34,6 +37,7 @@ void UPP_GameInstance::LoadMenu()
 		return;
 	}
 
+	// Create the widget
 	UUserWidget* MenuWidget = CreateWidget<UUserWidget>(this, MenuClass);
 
 	if (!IsValid(MenuWidget))
@@ -41,7 +45,24 @@ void UPP_GameInstance::LoadMenu()
 		return;
 	}
 
+	// Add widget to screen.
 	MenuWidget->AddToViewport();
+
+	// We need the Player Controller to set the input mode for this menu
+	APlayerController* PC = GetFirstLocalPlayerController();
+	if (!IsValid(PC))
+	{
+		return;
+	}
+
+	// Setup the input data to interact with the menu
+	FInputModeUIOnly InputModeData;
+	InputModeData.SetWidgetToFocus(MenuWidget->TakeWidget()); // The first widget to focus at start
+	InputModeData.SetLockMouseToViewportBehavior(MouseLockMode); // The lock mouse behaviour
+	PC->SetInputMode(InputModeData); // Finally set it.
+
+	// Show the cursor or not.
+	PC->bShowMouseCursor = bShowMainMenuCursor;
 }
 
 void UPP_GameInstance::PP_Host()
