@@ -18,7 +18,7 @@ class PUZZLEPLATFORM_API UPP_MainMenu : public UUserWidget
 	
 public:
 
-	// Use BindWidget to create a link from the Widget Button to this pointer to be managed on c++
+	// Use BindWidget to create a link from the Widget Button to this pointer to be managed on c++ (Has to be the SAME NAME)
 	UPROPERTY(meta = (BindWidget))
 	UButton* Host;
 
