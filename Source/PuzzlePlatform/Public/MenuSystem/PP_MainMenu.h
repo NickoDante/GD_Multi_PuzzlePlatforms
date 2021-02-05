@@ -19,6 +19,12 @@ class PUZZLEPLATFORM_API UPP_MainMenu : public UUserWidget
 	
 public:
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
+	bool bShowMainMenuCursor = true;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
+	EMouseLockMode MouseLockMode = EMouseLockMode::DoNotLock;
+
 	// Use BindWidget to create a link from the Widget Button to this pointer to be managed on c++ (Has to be the SAME NAME)
 	UPROPERTY(meta = (BindWidget))
 	UButton* HostButton;
@@ -31,6 +37,10 @@ public:
 public:
 
 	void SetMenuInterface(IPP_MenuInterface* Interface);
+
+	void Setup();
+
+	virtual void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;
 
 protected:
 

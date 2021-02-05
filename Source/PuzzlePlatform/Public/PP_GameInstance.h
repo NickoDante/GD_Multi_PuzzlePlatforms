@@ -24,12 +24,6 @@ public:
 public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
-	bool bShowMainMenuCursor;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
-	EMouseLockMode MouseLockMode;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
 	TSubclassOf<UUserWidget> MenuClass;
 
 public:
