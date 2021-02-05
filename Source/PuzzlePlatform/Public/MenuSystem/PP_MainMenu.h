@@ -20,8 +20,18 @@ public:
 
 	// Use BindWidget to create a link from the Widget Button to this pointer to be managed on c++ (Has to be the SAME NAME)
 	UPROPERTY(meta = (BindWidget))
-	UButton* Host;
+	UButton* HostButton;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* Join;
+	UButton* JoinButton;
+
+protected:
+
+	virtual bool Initialize() override;
+
+	UFUNCTION()
+	void HostServer();
+
+	UFUNCTION()
+	void JoinServer();
 };
