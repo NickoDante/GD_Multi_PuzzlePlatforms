@@ -3,15 +3,45 @@
 
 #include "PP_GameInstance.h"
 #include "Engine/Engine.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
 
 UPP_GameInstance::UPP_GameInstance(const FObjectInitializer & ObjectInitializer)
 {
 	UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+
+	///In the course, he load the menu here, but comments say it's not the best way to do it.
+	///---------
+// 	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WBP_MainMenu"));
+// 	if (!IsValid(MenuBPClass.Class))
+// 	{
+// 		return;
+// 	}
+// 
+// 	MenuClass = MenuBPClass.Class;
+	///---------
 }
 
 void UPP_GameInstance::Init()
 {
 	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
+}
+
+void UPP_GameInstance::LoadMenu()
+{
+	if (!IsValid(MenuClass))
+	{
+		return;
+	}
+
+	UUserWidget* MenuWidget = CreateWidget<UUserWidget>(this, MenuClass);
+
+	if (!IsValid(MenuWidget))
+	{
+		return;
+	}
+
+	MenuWidget->AddToViewport();
 }
 
 void UPP_GameInstance::PP_Host()
@@ -51,4 +81,9 @@ void UPP_GameInstance::PP_Join(const FString& Address)
 	}
 
 	PC->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+}
+
+void UPP_GameInstance::PP_LoadMenu()
+{
+	LoadMenu();
 }
