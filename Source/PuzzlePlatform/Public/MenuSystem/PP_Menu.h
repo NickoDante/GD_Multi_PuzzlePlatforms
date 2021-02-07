@@ -33,5 +33,7 @@ public:
 	void Setup();
 
 	virtual void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;
+
+	void Teardown();
 	
 };

@@ -67,6 +67,25 @@ void UPP_GameInstance::Join(const FString& Address)
 	PC->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
 
+void UPP_GameInstance::Quit()
+{
+	UEngine* Engine = GetEngine();
+	if (!IsValid(Engine))
+	{
+		return;
+	}
+
+	Engine->AddOnScreenDebugMessage(0, 2, FColor::Orange, TEXT("Quitting Match"));
+
+	APlayerController* PC = GetFirstLocalPlayerController();
+	if (!IsValid(PC))
+	{
+		return;
+	}
+
+	PC->ClientTravel("/Game/Maps/MainMenu", ETravelType::TRAVEL_Absolute);
+}
+
 void UPP_GameInstance::LoadMenu()
 {
 	LoadSpecificMenu(MenuClass);

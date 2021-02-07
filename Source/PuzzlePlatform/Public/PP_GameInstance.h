@@ -37,6 +37,8 @@ public:
 
 	virtual void Join(const FString& Address) override;
 
+	virtual void Quit() override;
+
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();
 

@@ -26,4 +26,6 @@ public:
 	virtual void Host() {};
 
 	virtual void Join(const FString& Address) {};
+
+	virtual void Quit() {};
 };

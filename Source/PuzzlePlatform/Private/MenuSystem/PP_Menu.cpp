@@ -38,6 +38,12 @@ void UPP_Menu::Setup()
 
 void UPP_Menu::OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld)
 {
+	Teardown();
+	Super::OnLevelRemovedFromWorld(InLevel, InWorld);
+}
+
+void UPP_Menu::Teardown()
+{
 	this->RemoveFromViewport();
 
 	UWorld* World = GetWorld();
@@ -59,6 +65,4 @@ void UPP_Menu::OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld)
 
 	// Show the cursor or not.
 	PC->bShowMouseCursor = false;
-
-	Super::OnLevelRemovedFromWorld(InLevel, InWorld);
 }
