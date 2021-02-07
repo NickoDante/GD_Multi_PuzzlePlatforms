@@ -35,6 +35,9 @@ public:
 	UButton* BackButton;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* QuitButton;
+
+	UPROPERTY(meta = (BindWidget))
 	UWidgetSwitcher* MenuSwitcher;
 
 	UPROPERTY(meta = (BindWidget))
@@ -64,4 +67,7 @@ protected:
 
 	UFUNCTION()
 	void JoinServer();
+
+	UFUNCTION()
+	void QuitGame();
 };

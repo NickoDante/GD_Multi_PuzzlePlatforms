@@ -33,6 +33,10 @@ bool UPP_MainMenu::Initialize()
 	{
 		JoinButton->OnPressed.AddDynamic(this, &UPP_MainMenu::JoinServer);
 	}
+	if (IsValid(QuitButton))
+	{
+		QuitButton->OnPressed.AddDynamic(this, &UPP_MainMenu::QuitGame);
+	}
 
 	return true;
 }
@@ -84,4 +88,22 @@ void UPP_MainMenu::JoinServer()
 		const FString IPAdress = IPAdressText.ToString();
 		MenuInterface->Join(IPAdress);
 	}
+}
+
+void UPP_MainMenu::QuitGame()
+{
+	UWorld* World = GetWorld();
+	if (!IsValid(World))
+	{
+		return;
+	}
+
+	// We need the Player Controller to set the input mode for this menu
+	APlayerController* PC = World->GetFirstPlayerController();
+	if (!IsValid(PC))
+	{
+		return;
+	}
+
+	PC->ConsoleCommand("Quit");
 }
