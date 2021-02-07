@@ -8,6 +8,8 @@
 
 class UButton;
 class IPP_MenuInterface;
+class UWidgetSwitcher;
+class UWidget;
 
 /**
  * 
@@ -30,7 +32,22 @@ public:
 	UButton* HostButton;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* ShowJoinMenuButton;
+
+	UPROPERTY(meta = (BindWidget))
 	UButton* JoinButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* BackButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidgetSwitcher* MenuSwitcher;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidget* JoinMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidget* MainMenu;
 
 	IPP_MenuInterface* MenuInterface;
 
@@ -48,6 +65,15 @@ protected:
 
 	UFUNCTION()
 	void HostServer();
+
+	UFUNCTION()
+	void OpenJoinMenu();
+
+	UFUNCTION()
+	void OpenMainMenu();
+
+	UFUNCTION()
+	void OpenSpecificMenu(UWidget* SpecificMenu);
 
 	UFUNCTION()
 	void JoinServer(const FString& Address);

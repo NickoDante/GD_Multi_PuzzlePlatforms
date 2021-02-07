@@ -3,7 +3,9 @@
 
 #include "MenuSystem/PP_MainMenu.h"
 #include "Components/Button.h"
+#include "Components/WidgetSwitcher.h"
 #include "MenuSystem/PP_MenuInterface.h"
+#include "Components/Widget.h"
 
 void UPP_MainMenu::SetMenuInterface(IPP_MenuInterface* Interface)
 {
@@ -73,13 +75,14 @@ bool UPP_MainMenu::Initialize()
 	}
 
 	// Setup
-	if (!IsValid(HostButton) || !IsValid(JoinButton))
+	if (!IsValid(HostButton) || !IsValid(ShowJoinMenuButton) || !IsValid(BackButton))
 	{
 		return false;
 	}
 
 	HostButton->OnPressed.AddDynamic(this, &UPP_MainMenu::HostServer);
-	//JoinButton->OnPressed.AddDynamic(this, &UPP_MainMenu::JoinServer); // We comment this because we dont have the adress and the parameter is not valid to bind
+	ShowJoinMenuButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenJoinMenu);
+	BackButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenMainMenu);
 
 	return true;
 }
@@ -90,6 +93,31 @@ void UPP_MainMenu::HostServer()
 	{
 		MenuInterface->Host();
 	}
+}
+
+void UPP_MainMenu::OpenJoinMenu()
+{
+	OpenSpecificMenu(JoinMenu);
+}
+
+void UPP_MainMenu::OpenMainMenu()
+{
+	OpenSpecificMenu(MainMenu);
+}
+
+void UPP_MainMenu::OpenSpecificMenu(UWidget* SpecificMenu)
+{
+	if (!IsValid(MenuSwitcher))
+	{
+		return;
+	}
+
+	if (!IsValid(SpecificMenu))
+	{
+		return;
+	}
+
+	MenuSwitcher->SetActiveWidget(SpecificMenu);
 }
 
 void UPP_MainMenu::JoinServer(const FString& Address)
