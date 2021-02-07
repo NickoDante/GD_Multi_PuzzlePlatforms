@@ -26,6 +26,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
 	TSubclassOf<UUserWidget> MenuClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
+	TSubclassOf<UUserWidget> InGameMenuClass;
+
 public:
 
 	virtual void Init() override;
@@ -36,6 +39,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void LoadInGameMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void LoadSpecificMenu(TSubclassOf<UUserWidget> SpecificMenu);
 
 public:
 

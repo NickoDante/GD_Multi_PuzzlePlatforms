@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "MenuSystem/PP_Menu.h"
 #include "PP_MainMenu.generated.h"
 
 class UButton;
-class IPP_MenuInterface;
 class UWidgetSwitcher;
 class UWidget;
 class UEditableTextBox;
@@ -16,17 +15,11 @@ class UEditableTextBox;
  * 
  */
 UCLASS()
-class PUZZLEPLATFORM_API UPP_MainMenu : public UUserWidget
+class PUZZLEPLATFORM_API UPP_MainMenu : public UPP_Menu
 {
 	GENERATED_BODY()
 	
 public:
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
-	bool bShowMainMenuCursor = true;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MainMenu")
-	EMouseLockMode MouseLockMode = EMouseLockMode::DoNotLock;
 
 	// Use BindWidget to create a link from the Widget Button to this pointer to be managed on c++ (Has to be the SAME NAME)
 	UPROPERTY(meta = (BindWidget))
@@ -52,16 +45,6 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UEditableTextBox* IPAdressField;
-
-	IPP_MenuInterface* MenuInterface;
-
-public:
-
-	void SetMenuInterface(IPP_MenuInterface* Interface);
-
-	void Setup();
-
-	virtual void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;
 
 protected:
 

@@ -5,7 +5,7 @@
 #include "Engine/Engine.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
-#include "MenuSystem/PP_MainMenu.h"
+#include "MenuSystem/PP_Menu.h"
 
 UPP_GameInstance::UPP_GameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -69,24 +69,34 @@ void UPP_GameInstance::Join(const FString& Address)
 
 void UPP_GameInstance::LoadMenu()
 {
-	if (!IsValid(MenuClass))
+	LoadSpecificMenu(MenuClass);
+}
+
+void UPP_GameInstance::LoadInGameMenu()
+{
+	LoadSpecificMenu(InGameMenuClass);
+}
+
+void UPP_GameInstance::LoadSpecificMenu(TSubclassOf<UUserWidget> SpecificMenu)
+{
+	if (!IsValid(SpecificMenu))
 	{
 		return;
 	}
 
 	// Create the widget
-	UPP_MainMenu* MenuWidget = CreateWidget<UPP_MainMenu>(this, MenuClass);
+	UPP_Menu* SpecificMenuWidget = CreateWidget<UPP_Menu>(this, SpecificMenu);
 
-	if (!IsValid(MenuWidget))
+	if (!IsValid(SpecificMenuWidget))
 	{
 		return;
 	}
 
 	// Create the Widget setup.
-	MenuWidget->Setup();
+	SpecificMenuWidget->Setup();
 
 	// Set the interface of the game instance to the main menu
-	MenuWidget->SetMenuInterface(this);
+	SpecificMenuWidget->SetMenuInterface(this);
 }
 
 void UPP_GameInstance::PP_Host()
