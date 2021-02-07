@@ -1,0 +1,1 @@
+"D:\Program Files\Epic Games\UE_4.25\Engine\Binaries\Win64\UE4Editor.exe" "D:\UE_Projects\GameDev\Multi_01_PuzzlePlatforms\PuzzlePlatform.uproject" -game -log

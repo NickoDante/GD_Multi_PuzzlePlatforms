@@ -6,6 +6,7 @@
 #include "Components/WidgetSwitcher.h"
 #include "MenuSystem/PP_MenuInterface.h"
 #include "Components/Widget.h"
+#include "Components/EditableTextBox.h"
 
 void UPP_MainMenu::SetMenuInterface(IPP_MenuInterface* Interface)
 {
@@ -75,14 +76,22 @@ bool UPP_MainMenu::Initialize()
 	}
 
 	// Setup
-	if (!IsValid(HostButton) || !IsValid(ShowJoinMenuButton) || !IsValid(BackButton))
+	if (IsValid(HostButton))
 	{
-		return false;
+		HostButton->OnPressed.AddDynamic(this, &UPP_MainMenu::HostServer);
 	}
-
-	HostButton->OnPressed.AddDynamic(this, &UPP_MainMenu::HostServer);
-	ShowJoinMenuButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenJoinMenu);
-	BackButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenMainMenu);
+	if (IsValid(ShowJoinMenuButton))
+	{
+		ShowJoinMenuButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenJoinMenu);
+	}
+	if (IsValid(BackButton))
+	{
+		BackButton->OnPressed.AddDynamic(this, &UPP_MainMenu::OpenMainMenu);
+	}
+	if (IsValid(JoinButton))
+	{
+		JoinButton->OnPressed.AddDynamic(this, &UPP_MainMenu::JoinServer);
+	}
 
 	return true;
 }
@@ -120,10 +129,18 @@ void UPP_MainMenu::OpenSpecificMenu(UWidget* SpecificMenu)
 	MenuSwitcher->SetActiveWidget(SpecificMenu);
 }
 
-void UPP_MainMenu::JoinServer(const FString& Address)
+void UPP_MainMenu::JoinServer()
 {
 	if (MenuInterface != nullptr)
 	{
-		MenuInterface->Join(Address);
+		FText IPAdressText = FText();
+
+		if (IsValid(IPAdressField))
+		{
+			IPAdressText = IPAdressField->GetText();
+		}
+
+		const FString IPAdress = IPAdressText.ToString();
+		MenuInterface->Join(IPAdress);
 	}
 }

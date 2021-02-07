@@ -10,6 +10,7 @@ class UButton;
 class IPP_MenuInterface;
 class UWidgetSwitcher;
 class UWidget;
+class UEditableTextBox;
 
 /**
  * 
@@ -49,6 +50,9 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	UWidget* MainMenu;
 
+	UPROPERTY(meta = (BindWidget))
+	UEditableTextBox* IPAdressField;
+
 	IPP_MenuInterface* MenuInterface;
 
 public:
@@ -76,5 +80,5 @@ protected:
 	void OpenSpecificMenu(UWidget* SpecificMenu);
 
 	UFUNCTION()
-	void JoinServer(const FString& Address);
+	void JoinServer();
 };
